@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Simple plugin to get any SSDP / UPnP / DLNA service on a local network",
   "cordova": {
-    "id": "com.scott.serviceDiscovery",
+    "id": "cordova-plugin-discovery",
     "platforms": [
       "android",
       "ios"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scottdermott/cordova-plugin-discovery.git"
+    "url": "git+https://github.com/ubbey/cordova-plugin-discovery.git"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -27,7 +27,7 @@
   "author": "Scott Dermott",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/scottdermott/cordova-plugin-discovery/issues"
+    "url": "https://github.com/ubbey/cordova-plugin-discovery/issues"
   },
-  "homepage": "https://github.com/scottdermott/cordova-plugin-discovery#readme"
+  "homepage": "https://github.com/ubbey/cordova-plugin-discovery#readme"
 }

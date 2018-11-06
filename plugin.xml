@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.scott.serviceDiscovery"
+        id="cordova-plugin-discovery"
         version="0.2.0">
 
   <name>serviceDiscovery</name>

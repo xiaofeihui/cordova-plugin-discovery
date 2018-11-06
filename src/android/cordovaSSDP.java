@@ -1,4 +1,4 @@
-package com.scott.plugin;
+package cordova.plugin.discovery;
 
 import org.apache.cordova.*;
 
@@ -89,7 +89,7 @@ public class cordovaSSDP extends CordovaPlugin {
         discoveryMessage.append("M-SEARCH * HTTP/1.1\r\n");
         discoveryMessage.append("HOST: " + SSDP_IP + ":" + SSDP_PORT + "\r\n");
         
-        discoveryMessage.append("ST:"+service+"\r\n");
+        // discoveryMessage.append("ST: "+service+"\r\n");
         //discoveryMessage.append("ST:ssdp:all\r\n");
         discoveryMessage.append("MAN: \"ssdp:discover\"\r\n");
         discoveryMessage.append("MX: 2\r\n");
@@ -128,7 +128,8 @@ public class cordovaSSDP extends CordovaPlugin {
                         device.put("LOCATION", parseHeaderValue(message, "LOCATION"));
                         device.put("ST", parseHeaderValue(message, "ST"));
                         device.put("Server", parseHeaderValue(message, "Server"));
-                        createServiceObjWithXMLData(parseHeaderValue(message, "LOCATION"), device);
+                        // createServiceObjWithXMLData(parseHeaderValue(message, "LOCATION"), device);
+                        mDeviceList.put(device);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

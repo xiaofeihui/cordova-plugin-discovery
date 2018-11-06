@@ -1,4 +1,4 @@
-package com.scott.plugin;
+package cordova.plugin.discovery;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
