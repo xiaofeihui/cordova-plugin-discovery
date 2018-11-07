@@ -21,7 +21,7 @@
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="serviceDiscovery">
-        <param name="android-package" value="com.scott.plugin.serviceDiscovery"/>
+        <param name="android-package" value="cordova.plugin.discovery.serviceDiscovery"/>
       </feature>
     </config-file>
 

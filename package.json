@@ -1,5 +1,5 @@
 {
-  "name": "cordova-plugin-discovery",
+  "name": "serviceDiscovery",
   "version": "0.2.0",
   "description": "Simple plugin to get any SSDP / UPnP / DLNA service on a local network",
   "cordova": {
