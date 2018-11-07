@@ -25,8 +25,8 @@
       </feature>
     </config-file>
 
-    <source-file src="src/android/serviceDiscovery.java" target-dir="src/com/scott/plugin/"/>
-    <source-file src="src/android/cordovaSSDP.java" target-dir="src/com/scott/plugin/"/>
+    <source-file src="src/android/serviceDiscovery.java" target-dir="src/cordova/plugin/discovery/"/>
+    <source-file src="src/android/cordovaSSDP.java" target-dir="src/cordova/plugin/discovery/"/>
     <!-- Requires 3rd party HTTP lib -->
     <framework src="com.loopj.android:android-async-http:1.4.9" />
   </platform>
