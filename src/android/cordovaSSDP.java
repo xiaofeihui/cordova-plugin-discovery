@@ -154,7 +154,7 @@ public class cordovaSSDP extends CordovaPlugin {
         String location = parseHeaderValue(message, "LOCATION");
         int start = location.indexOf("/description.xml?id=");
         if (start>0){
-            return location.substring(start);
+            return location.substring(start + 20);
         }else{
             return "";
         }
