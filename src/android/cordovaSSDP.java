@@ -131,7 +131,7 @@ public class cordovaSSDP extends CordovaPlugin {
                         // createServiceObjWithXMLData(parseHeaderValue(message, "LOCATION"), device);
                         mDeviceList.put(device);
                         String id = getDeviceId(message);
-                        if (fastSearchId != "" && id.equals(fastSearchId)){
+                        if (!fastSearchId.equals("") && id.equals(fastSearchId)){
                             LOG.e(TAG, "快速搜索盒子成功");
                             callbackContext.success(mDeviceList);
                             break;
