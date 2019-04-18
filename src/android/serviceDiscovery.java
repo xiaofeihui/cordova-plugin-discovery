@@ -15,16 +15,17 @@ public class serviceDiscovery extends CordovaPlugin {
         if (action.equals("getNetworkServices")) {
 
             final String service = data.getString(0);
+            final String fastSearchId = data.getString(1);
 
             cordova.getThreadPool().execute(new Runnable() {
-               @Override
-               public void run() {
-                  try{
-                      mCordovaSSDP.search(service,callbackContext);
+                @Override
+                public void run() {
+                    try{
+                        mCordovaSSDP.search(service, fastSearchId, callbackContext);
                     }catch(IOException e){
-                      e.printStackTrace();
+                        e.printStackTrace();
                     }
-               }
+                }
             });  
             return true;
 

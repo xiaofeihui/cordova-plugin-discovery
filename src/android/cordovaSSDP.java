@@ -72,7 +72,7 @@ public class cordovaSSDP extends CordovaPlugin {
         });
     }
 
-    public void search(String service, CallbackContext callbackContext) throws IOException {
+    public void search(String service, String fastSearchId, CallbackContext callbackContext) throws IOException {
         final int SSDP_PORT = 1900;
         final int SSDP_SEARCH_PORT = 1901;
         final String SSDP_IP = "239.255.255.250";
@@ -130,6 +130,12 @@ public class cordovaSSDP extends CordovaPlugin {
                         device.put("Server", parseHeaderValue(message, "Server"));
                         // createServiceObjWithXMLData(parseHeaderValue(message, "LOCATION"), device);
                         mDeviceList.put(device);
+                        String id = getDeviceId(message);
+                        if (!fastSearchId.equals("") && id.equals(fastSearchId)){
+                            LOG.e(TAG, "快速搜索盒子成功");
+                            callbackContext.success(mDeviceList);
+                            break;
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -146,4 +152,13 @@ public class cordovaSSDP extends CordovaPlugin {
         }
     }
 
+    private String getDeviceId(String message){
+        String location = parseHeaderValue(message, "LOCATION");
+        int start = location.indexOf("/description.xml?id=");
+        if (start>0){
+            return location.substring(start + 20);
+        }else{
+            return "";
+        }
+    }
 }
