@@ -17,7 +17,9 @@ NSMutableArray *serviceArr;
  */
 - (void)getNetworkServices: (CDVInvokedUrlCommand*)command {
 
-    NSString* serviceType = [command.arguments objectAtIndex:0];
+    NSString* serviceType   = [command.arguments objectAtIndex:0];
+    NSString* fastSearchId  = [command.arguments objectAtIndex:1];
+
     [self.commandDelegate runInBackground:^{
 
     CDVPluginResult* pluginResult = nil;
@@ -88,7 +90,7 @@ NSMutableArray *serviceArr;
                             // receive
                             struct sockaddr_in receiveSockaddr;
                             socklen_t receiveSockaddrLen = sizeof(receiveSockaddr);
-        
+
                             size_t bufSize = 9216;
                             void *buf = malloc(bufSize);
                                         NSLog(@"recv: listening now: %d", sd);
@@ -114,6 +116,13 @@ NSMutableArray *serviceArr;
                                 NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
                                 [self processResponse:msg];
+
+                                NSString * id = [self getDeviceId:msg];
+ 
+                                if (fastSearchId != nil && [id isEqualToString:fastSearchId]){
+                                    NSLog(@"fast search success");
+                                    break;
+                                }
                             }
 
                             free(buf);
@@ -137,7 +146,7 @@ NSMutableArray *serviceArr;
 - (void)processResponse:(NSString *)message
 {
 //    NSLog(@"%@", message);
-    
+
     NSArray *msgLines = [message componentsSeparatedByString:@"\r"];
 
 //    NSLog(@"total lines:%lu", [msgLines count]);
@@ -167,6 +176,44 @@ NSMutableArray *serviceArr;
     }
     [serviceArr addObject: data];
 
+}
+
+/*
+ * Get device id from location.
+ */
+- (NSString *)getDeviceId:(NSString *)message
+{
+
+    NSArray *msgLines = [message componentsSeparatedByString:@"\r"];
+
+    int i = 0;
+    for (i = 0; i < [msgLines count]; i++)
+    {
+        // NSLog(@"working on:%@", msgLines[i]);
+        NSRange range = [msgLines[i] rangeOfString:@":"];
+
+        if(range.length == 1){
+            NSRange p1range = NSMakeRange(0, range.location);
+            NSString *part1 = [msgLines[i] substringWithRange:p1range];
+            part1 = [part1 stringByTrimmingCharactersInSet:
+                       [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+            NSRange p2range = NSMakeRange(range.location + 1 , [msgLines[i] length] - range.location - 1);
+            NSString *part2 = [msgLines[i] substringWithRange:p2range];
+            part2 = [part2 stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+            if([part1 isEqualToString:@"LOCATION"]){
+                NSRange searchResult = [part2 rangeOfString:@"/description.xml?id="];
+                if (searchResult.location != NSNotFound) {
+                    NSInteger len = @"/description.xml?id=".length;
+                    NSRange range  = NSMakeRange(searchResult.location + len, part2.length - searchResult.location - len);
+                    NSString *id = [part2 substringWithRange:range];
+                    return id;
+                }
+            }
+        }
+    }
+    return @"";
 }
 
 @end
